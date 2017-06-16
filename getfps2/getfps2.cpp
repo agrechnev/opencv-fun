@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cstdio>
+#include <thread>
 
 #include "opencv2/opencv.hpp"
 
@@ -12,24 +13,39 @@ int main(int, char**)
 {
     using namespace cv;
     using namespace std;
-    VideoCapture cap(CV_CAP_ANY); // open the default camera
+    VideoCapture cap(200); // open the V4L2 camera
     
     // check if we succeeded
     if(!cap.isOpened())  {
         cerr << "Cannot open camera ! \n";
         return -1;
     }
-//    cap.set(CV_CAP_PROP_FPS, 90);
-    
-    // Print the data
+
+    cerr << "Before : " << endl;
     cerr << "width = " << cap.get(CV_CAP_PROP_FRAME_WIDTH) << endl;
     cerr << "height = " << cap.get(CV_CAP_PROP_FRAME_HEIGHT) << endl;
-    cerr << "framerate = " << cap.get(CV_CAP_PROP_FPS) << endl;
+    cerr << "fps = " << cap.get(CV_CAP_PROP_FPS) << endl;
+
+
+    cap.set(CV_CAP_PROP_FPS, 90);
+    //cap.set(CV_CAP_PROP_FRAME_WIDTH, 640);
+    //cap.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
+
+
+    cerr << "After : " << endl;
+    cerr << "width = " << cap.get(CV_CAP_PROP_FRAME_WIDTH) << endl;
+    cerr << "height = " << cap.get(CV_CAP_PROP_FRAME_HEIGHT) << endl;
+    cerr << "fps = " << cap.get(CV_CAP_PROP_FPS) << endl;
+
+    cerr << "Sleeping for 3 seconds ..." << endl;
+    this_thread::sleep_for(chrono::seconds(3));
+    cerr << "Waking up ..." << endl;
+    
 
     Mat frame;
 
     constexpr bool SHOW = false;
-    constexpr int NUM_FRAMES = 100; // Number of frames to read
+    constexpr int NUM_FRAMES = 500; // Number of frames to read
 
     if (SHOW)
         namedWindow("frame", 1);
@@ -40,17 +56,17 @@ int main(int, char**)
         bool ret;
 
         // get next frame from the camera
-        //        ret = cap.read(frame); // get a new frame from the camera
+        ret = cap.read(frame); // get a new frame from the camera
 
-        //        if (!ret)
-        //            throw runtime_error("Cannot read frame !");
+        if (!ret)
+            throw runtime_error("Cannot read frame !");
 
-        ret = cap.grab();
+        /*ret = cap.grab();
         if (!ret)
             throw runtime_error("Cannot grab frame !");
         ret = cap.retrieve(frame);
         if (!ret)
-            throw runtime_error("Cannot retrieve frame !");
+            throw runtime_error("Cannot retrieve frame !");*/
 
         if (SHOW) {
             imshow("frame", frame);
@@ -64,7 +80,7 @@ int main(int, char**)
     double ti = (t2-t1) / getTickFrequency();
     double fps = NUM_FRAMES / ti;
     
-    cerr << "fps = " << fps << endl;
+    cerr << "Average FPS = " << fps << endl;
     
     return 0;
 }
