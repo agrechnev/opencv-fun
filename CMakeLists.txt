@@ -16,6 +16,7 @@ include_directories( ${OpenCV_INCLUDE_DIRS} )
 # Build all examples
 add_subdirectory(example)
 add_subdirectory(fun)
+add_subdirectory(fun2)
 add_subdirectory(getfps)
 add_subdirectory(getfps2)
 add_subdirectory(grabcam)
