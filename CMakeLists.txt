@@ -3,11 +3,13 @@ project (opencvfun)
 
 set (CMAKE_CXX_STANDARD 14)
 
-if(WIN32)
- set(OpenCV_DIR d:/opencv)
-else()
- set(OpenCV_DIR  ~/opencv3/share/OpenCV)
-endif()
+
+# Put here opencv dir if needed
+#if(WIN32)
+# set(OpenCV_DIR d:/opencv)
+#else()
+# set(OpenCV_DIR  ~/opencv3/share/OpenCV)
+#endif()
 
 
 find_package( OpenCV REQUIRED )
