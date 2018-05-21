@@ -41,7 +41,7 @@ static void process(Mat & frame, CascadeClassifier & casFace, CascadeClassifier 
 //===============================
 int main(){
     // Open cam
-    VideoCapture cam(CV_CAP_ANY);
+    VideoCapture cam(CAP_ANY);
     if (!cam.isOpened())
         fatal("Cannot open camera");
 

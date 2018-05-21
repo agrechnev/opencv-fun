@@ -18,7 +18,7 @@ int main(int argc, char **argv){
     
     // Display the window
     
-    namedWindow("image", CV_WINDOW_AUTOSIZE);
+    namedWindow("image", WINDOW_AUTOSIZE);
     imshow("image", m);
     
     waitKey(0);

@@ -12,7 +12,7 @@ int main(int, char**)
 {
     using namespace cv;
     using namespace std;
-    VideoCapture cap(CV_CAP_ANY); // open the default camera
+    VideoCapture cap(CAP_ANY); // open the default camera
     
     // check if we succeeded
     if(!cap.isOpened())  {
