@@ -22,8 +22,8 @@ static Mat readImg(const string & fileName) {
 }
 //--------------------------------------------
 int main() {
-    cout << "Handmaiden's War" << endl;
-    cout << CV_MAJOR_VERSION << " " <<  CV_MINOR_VERSION << endl;
+    cout << "Handmaiden's War SIFT !" << endl;
+    cout << "OpenCV verssion = " << CV_VERSION << endl;
 
     Mat img1 = readImg("img/box.png");
     Mat img2 = readImg("img/box_in_scene.png");
@@ -67,7 +67,7 @@ int main() {
     vector<Point2f> corners1{{0., 0.}, {(float)img1.cols-1, 0.}, {(float)img1.cols-1, (float)img1.rows-1}, {0., (float)img1.rows-1}};
     vector<Point2f> corners2(4);
     perspectiveTransform(corners1, corners2, homo);
-    vector<Point2i> corners2i{ corners2[0], corners2[1], corners2[2], corners2[3]}; // To int
+    vector<Point2i> corners2i(corners2.begin(), corners2.end()); // To int
     polylines(img2, corners2i, true, {0xff, 0, 0}, 2, LINE_AA);
 
     // Draw features and matching

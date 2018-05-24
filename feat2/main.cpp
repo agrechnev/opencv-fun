@@ -20,11 +20,17 @@ static Mat readImg(const string & fileName) {
 }
 //--------------------------------------------
 int main() {
-    cout << "Handmaiden's War" << endl;
-    cout << CV_VERSION << endl;
+    cout << "Handmaiden's War AKAZE !!!" << endl;
+    cout << "OpenCV verssion = " << CV_VERSION << endl;
 
     Mat img1 = readImg("img/box.png");
     Mat img2 = readImg("img/box_in_scene.png");
+
+    // Resize if we need it
+//    cout << img1.cols << " " << img1.rows << endl;
+//    float K = (float) 480 / (float) std::max(img1.cols, img1.rows);
+//    cv::resize(img1, img1, cv::Size(), K, K, cv::INTER_LINEAR);
+//    cout << img1.cols << " " << img1.rows << endl;
 
     // Convert to GS just in case
     Mat gray1, gray2;
@@ -32,7 +38,6 @@ int main() {
     cvtColor(img2, gray2, COLOR_BGR2GRAY);
 
     // Detect features
-    cout << "AKAZE !!!" << endl;
     Ptr<AKAZE> detr = AKAZE::create();
     vector<KeyPoint> kp1, kp2;  // Keypoints
     Mat des1, des2; // Descriptors
@@ -42,7 +47,7 @@ int main() {
     cout << "kp2.size() = " << kp2.size() << endl;
 
     // Match, BF
-    Ptr<BFMatcher> bf = BFMatcher::create(NORM_L2, true);
+    Ptr<BFMatcher> bf = BFMatcher::create(NORM_HAMMING);
     vector<DMatch> matches;
     bf->match(des1, des2, matches);
     cout << "matches.size() = " << matches.size() << endl;
@@ -66,7 +71,7 @@ int main() {
     vector<Point2f> corners1{{0., 0.}, {(float)img1.cols-1, 0.}, {(float)img1.cols-1, (float)img1.rows-1}, {0., (float)img1.rows-1}};
     vector<Point2f> corners2(4);
     perspectiveTransform(corners1, corners2, homo);
-    vector<Point2i> corners2i{ corners2[0], corners2[1], corners2[2], corners2[3]}; // To int
+    vector<Point2i> corners2i(corners2.begin(), corners2.end()); // To int
     polylines(img2, corners2i, true, {0xff, 0, 0}, 2, LINE_AA);
 
     // Draw features and matching
