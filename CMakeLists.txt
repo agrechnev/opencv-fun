@@ -12,6 +12,10 @@ set (CMAKE_CXX_STANDARD 14)
 #endif()
 
 
+# Threads
+find_package(Threads)
+
+
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 

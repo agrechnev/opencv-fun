@@ -1,30 +1,28 @@
-#include <string>
 #include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <vector>
+#include <string>
 
-#include "opencv2/opencv.hpp"
+#include <opencv2/opencv.hpp>
 
 using namespace std;
 using namespace cv;
 
-//--------------------------------------------
-int main() {
 
-    cout << "Handmaiden's War" << endl;
+int main(int argc, char **argv) {
+    const string keys = "{help h usage ?||HELP MESSAGE}{name |Brianna|Your name}{@file|<none>|File name}";
+    CommandLineParser parser(argc, argv, keys);
+    parser.about("Brianna App !!!");
+    if (parser.has("help")) {
+        parser.printMessage();
+        return 0;
+    }
+    string name = parser.get<string>("name");
+    cout << "name = " << name << endl;
+    string file = parser.get<string>(0);
+    cout << "file = " << file << endl;
 
-    Mat img = imread("img/wolf500.jpg");
-
-    while (1) {
-        imshow("Goblin Window", img);
-        int key = waitKey(0);
-        if (27 == key)
-            break;
-        else if ('i' == key)
-            pyrUp(img, img);
-        else if ('o' == key)
-            pyrDown(img, img);
+    if (!parser.check()) {
+        parser.printErrors();
+        return 0;
     }
 
     return 0;
