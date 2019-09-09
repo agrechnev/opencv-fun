@@ -2,4 +2,6 @@ build/
 cmake-build-*/
 *.user
 .idea/
+.kdev4/
+*.kdev4
 *.iml
