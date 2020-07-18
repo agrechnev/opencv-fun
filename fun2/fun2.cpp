@@ -152,7 +152,7 @@ int main(int argc, char **argv) {
     imshow("img", img);
     imshow("outCorners", outCorners);
     imshow("outEVV", outEVV);
-    imshow("outEVV2", outEVV2);
+//     imshow("outEVV2", outEVV2);
     waitKey(0);
 
     return 0;
